@@ -1,55 +1,82 @@
 package Boletin_Matrices;
 
+import utils.MiEntradaSalida;
+
 public class Ejercicio16 {
 
     public static void main(String[] args) {
+        int[][] matriz = {
+                {1, 2, 3, 4, 5},
+                {6, 7, 8, 9, 0},
+                {3, 2, 1, 4, 5},
+                {9, 5, 8, 6, 7},
+                {0, 9, 8, 5, 4}
+        };
 
+        MiEntradaSalida.imprimirMatriz(matrizCuentaAdyadcentesPares(matriz));
     }
 
-    private static int[][] devuelveMatrizCasillasAdyadcentesPares(int[][] matriz) {
+    private static int[][] matrizCuentaAdyadcentesPares(int[][] matriz) {
 
-        int[][] matrizCasillasPares = new int[matriz.length][matriz[0].length];
-        int contadorPares;
+        int[][] matrizCuentaAdyadcentesPares = new int[matriz.length][matriz[0].length];
 
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
-                contadorPares = 0; //reinicio el contador a 0 por cada posicion
-                for (int k = -1; k <= 1; k++) {
-                    for (int l = -1; l <= 1; l++) {
-                        if (k == 0 && l == 0) {
-                            continue;
-                        }
-                        if (i + k >= 0 && i + k < matriz.length && j + l >= 0 && j + l < matriz[i].length) {
-                            if (matriz[i + k][j + l] % 2 == 0) {
-                                contadorPares++;
-                            }
-                        }
-                    }
-                }
-                matrizCasillasPares[i][j] = contadorPares;
+                matrizCuentaAdyadcentesPares[i][j] = adyadcenciaPares(matriz, i, j);
             }
         }
 
-        return matrizCasillasPares;
+        return matrizCuentaAdyadcentesPares;
     }
 
     /**
-     * Metodo que comprueba si una matriz es regular, comprobando que las filas y las columnas tengan las
-     * mismas longitudes
+     * Metodo que recorre las casillas adyadcentes a la posicion de una matriz y comprueba si es par
      *
-     * @param matriz la matriz con las que se trabaja
-     * @return {@code false} si la longitud es 0 o si las longitudes de las columnas son diferentes, {@code true} si
-     * cumple con las propiedades correspondientes
+     * @param matriz la matriz con la que se trabaja
+     * @param i      el indice de las filas de la matriz
+     * @param j      el indice que representa las columnas de la matriz
+     * @return cuantas posiciones adyadcentes pares tiene una casilla
+     */
+    private static int adyadcenciaPares(int[][] matriz, int i, int j) {
+
+        int contadorPares = 0;
+
+        for (int k = -1; k <= 1; k++) {
+            for (int l = -1; l <= 1; l++) {
+                if (k == 0 && l == 0) {
+                    continue; //salto la casilla para que no se compare consigo misma
+                }
+                if (k + i >= 0 && k + i < matriz.length && l + j >= 0 && l + j < matriz[0].length) { //verifico que esté dentro del tablero
+                    if (matriz[k + i][l + j] % 2 == 0) {
+                        contadorPares++;
+                    }
+                }
+            }
+        }
+
+        return contadorPares;
+    }
+
+
+    /**
+     * Metodo que verifica que una matriz sea regular, es decir, las filas tengan la misma longitud, y las columnas
+     * tambien.
+     *
+     * @param matriz la matriz con la que se trabaja
+     * @return {@code true} si cumple los requisitos, {@code false} si las longitudes no son iguales
+     * o la longitud de las filas es 0
      */
     private static boolean esRegular(int[][] matriz) {
 
         if (matriz.length == 0) {
-            return false;   //compruebo que la longitud de la matriz no sea 0
+            return false;
         }
 
         for (int i = 0; i < matriz.length; i++) {
-            if (matriz[i].length != matriz[0].length) { //comparo las longitudes de las columnas
-                return false;
+            for (int j = 0; j < matriz[i].length; j++) {
+                if (matriz[i].length != matriz[0].length) {
+                    return false;
+                }
             }
         }
 
