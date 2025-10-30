@@ -5,6 +5,7 @@ import utils.MiEntradaSalida;
 public class Ejercicio16 {
 
     public static void main(String[] args) {
+
         int[][] matriz = {
                 {1, 2, 3, 4, 5},
                 {6, 7, 8, 9, 0},
@@ -13,41 +14,48 @@ public class Ejercicio16 {
                 {0, 9, 8, 5, 4}
         };
 
-        MiEntradaSalida.imprimirMatriz(matrizCuentaAdyadcentesPares(matriz));
-    }
-
-    private static int[][] matrizCuentaAdyadcentesPares(int[][] matriz) {
-
-        int[][] matrizCuentaAdyadcentesPares = new int[matriz.length][matriz[0].length];
-
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                matrizCuentaAdyadcentesPares[i][j] = adyadcenciaPares(matriz, i, j);
-            }
-        }
-
-        return matrizCuentaAdyadcentesPares;
+        MiEntradaSalida.imprimirMatriz(devuelveCantidadDeColindantesPares(matriz));
     }
 
     /**
-     * Metodo que recorre las casillas adyadcentes a la posicion de una matriz y comprueba si es par
+     * Metodo crea una matriz cuyo valor de cada posicion esta basado en la cantidad de casillas adyadcentes pares que
+     * tiene
      *
      * @param matriz la matriz con la que se trabaja
-     * @param i      el indice de las filas de la matriz
-     * @param j      el indice que representa las columnas de la matriz
-     * @return cuantas posiciones adyadcentes pares tiene una casilla
+     * @return una matriz representando la cantidad de adyadcentes pares de una posicion
      */
-    private static int adyadcenciaPares(int[][] matriz, int i, int j) {
+    private static int[][] devuelveCantidadDeColindantesPares(int[][] matriz) {
+
+        int[][] matrizCantidadColindantesPares = new int[matriz.length][matriz[0].length];
+
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                matrizCantidadColindantesPares[i][j] = adyadcentesPares(matriz, i, j);
+            }
+        }
+
+        return matrizCantidadColindantesPares;
+    }
+
+    /**
+     * Metodo que accede a las posiciones adyadcentes de una matriz y comprueba cuales son par.
+     *
+     * @param matriz  la matriz con la que se trabaja
+     * @param fila    el indice de las filas
+     * @param columna el indice de las columnas
+     * @return el contador de cuantas casillas adyadcentes pares tiene una casilla
+     */
+    private static int adyadcentesPares(int[][] matriz, int fila, int columna) {
 
         int contadorPares = 0;
 
-        for (int k = -1; k <= 1; k++) {
-            for (int l = -1; l <= 1; l++) {
-                if (k == 0 && l == 0) {
-                    continue; //salto la casilla para que no se compare consigo misma
+        for (int k = fila - 1; k <= fila + 1; k++) {
+            for (int l = columna - 1; l <= columna + 1; l++) {
+                if (k == fila && l == columna) { //no se analiza a si misma
+                    continue;
                 }
-                if (k + i >= 0 && k + i < matriz.length && l + j >= 0 && l + j < matriz[0].length) { //verifico que esté dentro del tablero
-                    if (matriz[k + i][l + j] % 2 == 0) {
+                if (k >= 0 && k < matriz.length && l >= 0 && l < matriz[0].length) { //verifico que este dentro del rango
+                    if (matriz[k][l] % 2 == 0) {
                         contadorPares++;
                     }
                 }
@@ -57,14 +65,11 @@ public class Ejercicio16 {
         return contadorPares;
     }
 
-
     /**
-     * Metodo que verifica que una matriz sea regular, es decir, las filas tengan la misma longitud, y las columnas
-     * tambien.
+     * Metodo que verifica si una matriz tiene mismo tamaño de filas y de columnas
      *
      * @param matriz la matriz con la que se trabaja
-     * @return {@code true} si cumple los requisitos, {@code false} si las longitudes no son iguales
-     * o la longitud de las filas es 0
+     * @return {@code true} si cumple los requsitos, {@code false} si no cumple los requisitos
      */
     private static boolean esRegular(int[][] matriz) {
 
