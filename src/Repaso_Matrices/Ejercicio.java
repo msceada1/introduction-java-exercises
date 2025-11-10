@@ -202,10 +202,6 @@ public class Ejercicio {
 
     private static boolean esPar(int elemento) {
 
-        if (elemento % 2 == 0) {
-            return true;
-        }
-
-        return false;
+        return elemento % 2 == 0;
     }
 }
