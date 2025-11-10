@@ -17,6 +17,16 @@ public class Ejercicio {
                 {4, -5, 6},
                 {7, 8, 9}
         };
+
+        int[][] matriz3 = {
+                {1, 2, 3, 4, 5},
+                {6, 7, 8, 9, 0},
+                {3, 2, 1, 4, 5},
+                {9, 5, 8, 6, 7},
+                {0, 9, 8, 5, 4}
+        };
+
+        MiEntradaSalida.imprimirMatriz(matrizDeAdyadcentesPares(matriz3));
 /*
         imprimeMatrizPorFilasALaInversa(matriz1);
         System.out.println();
@@ -33,7 +43,6 @@ public class Ejercicio {
         }
 
     */
-
 
 
     }
@@ -156,5 +165,47 @@ public class Ejercicio {
         }
 
         return true;
+    }
+
+    private static int[][] matrizDeAdyadcentesPares(int[][] matriz) {
+
+        int[][] matrizCuentaAdyadcentesPares = new int[matriz.length][matriz[0].length];
+
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                matrizCuentaAdyadcentesPares[i][j] = cuentaAdyadcentesPares(matriz, i, j);
+            }
+        }
+
+        return matrizCuentaAdyadcentesPares;
+    }
+
+    private static int cuentaAdyadcentesPares(int[][] matriz, int i, int j) {
+
+        int contador = 0;
+
+        for (int k = i - 1; k <= i + 1; k++) {
+            for (int l = j - 1; l <= j + 1; l++) {
+                if (k == i && l == j) {
+                    continue;
+                }
+                if (k >= 0 && k < matriz.length && l >= 0 && l < matriz[0].length) {
+                    if (esPar(matriz[k][l])) {
+                        contador++;
+                    }
+                }
+            }
+        }
+
+        return contador;
+    }
+
+    private static boolean esPar(int elemento) {
+
+        if (elemento % 2 == 0) {
+            return true;
+        }
+
+        return false;
     }
 }
