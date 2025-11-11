@@ -10,4 +10,20 @@ public class Ejercicio1Examen2020 {
         int[] votosPartidoDemocrata = {729547, 116454, 1161167, 380494, 8753788, 1338870, 897572, 235603, 282830, 4504975, 1877963, 266891, 189765, 3090729, 1033126, 653669, 427005, 628854, 780154, 715326, 1677928, 1995196, 2268839, 1367716, 485131, 1071068, 177709, 568988, 539260, 348526, 2148278, 385234, 4556124, 2189316, 93758, 2394164, 420375, 1002106, 2926441, 252525, 855373, 117458, 870695, 3877868, 310676, 178573, 1981473, 1742718, 188794, 1382536, 55973};
 
     }
+
+    private static int[] votosPorPartido(int[] votosPartdoRepublicano, int[] votosPartidoDemocrata, int[] electores) {
+
+        int[] votosPorPartido = new int[2];
+
+        for (int i = 0; i < votosPartdoRepublicano.length; i++) {
+            if (votosPartdoRepublicano[i] > votosPartidoDemocrata[i]) {
+                votosPorPartido[0] += electores[i];
+            } else {
+                votosPorPartido[1] += electores[i];
+            }
+        }
+
+        return votosPorPartido;
+    }
+
 }
