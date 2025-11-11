@@ -66,4 +66,9 @@ public class Ejercicio1Examen2020 {
         return sumaVotos;
     }
 
+    private static void estadoQueMasElectoresAporta(int[] estados, int electores) {
+
+
+    }
+
 }
